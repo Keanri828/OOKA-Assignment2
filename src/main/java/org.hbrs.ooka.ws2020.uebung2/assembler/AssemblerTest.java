@@ -46,7 +46,6 @@ public class AssemblerTest {
         Method[] meth = cla.getMethods();
         for (Method me : meth) {
             System.out.println(me.getName());
-            System.out.println(me.getParameterTypes());
         }
         method = cla.getMethod("main", String[].class);
         System.out.println("Method was created successfully");
