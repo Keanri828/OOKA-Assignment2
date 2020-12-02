@@ -1,9 +1,10 @@
 package org.hbrs.ooka.ws2020.uebung2.assembler;
 
+import org.hbrs.ooka.ws2020.uebung2.runtime.RuntimeEnv;
+
 public class AssemblerTest {
     public static void main(String[] args) throws Exception {
-        ComponentAssembler comAss = new ComponentAssembler();
-        comAss.loadClasses("Counter");
+        new RuntimeEnv().initComponent("Counter");
         /*Component com = con.search("Client");
         Class cla = com.getC();
         Method method = null;

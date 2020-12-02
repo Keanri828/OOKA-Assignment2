@@ -16,16 +16,8 @@ public class Component {
     private HashMap<String, Class> map= new HashMap<>();
     private Method start;
     private Method end;
-    private CLI cli;
 
 
-    public CLI getCLI() {
-        return cli;
-    }
-
-    public void setCLI(CLI cli) {
-        this.cli = cli;
-    }
 
     public Class getClass(String name){
         return map.get(name);
@@ -58,7 +50,8 @@ public class Component {
     }
 
     public Method getEnd() { return end; }
-
+    public void setStop(Method stop){ end = stop;}
+    public Method getStop() { return end;}
     public void setStart(Method start) {
         this.start = start;
     }
