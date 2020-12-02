@@ -8,11 +8,15 @@ import java.lang.reflect.Method;
 public class ComponentThread extends Thread{
     private volatile boolean stop = false;
     private Component comp;
+    private Method startMethod;
+    private Method endMethod;
 
     public ComponentThread(String name, Component c) {
         this.setName(name);
         this.comp = c;
         this.setContextClassLoader(c.getClassLoader());
+        this.startMethod = c.getStart();
+        this.endMethod = c.getEnd();
     }
 
     /**
@@ -23,35 +27,31 @@ public class ComponentThread extends Thread{
         throw new UnsupportedOperationException();
     }
 
+    public void stopComponentThread() throws InvocationTargetException, IllegalAccessException {
+        // End Objekt und Methode
+        Object endObject = instantiateObjectForMethod(this.endMethod);
+        Class<?> endReturnType = this.endMethod.getReturnType(); // if needed
+
+        this.endMethod.invoke(endObject);
+    }
+
     /**
-     * wird gestartet durch Thread.start(), kann von außen mit Thread.interrupt()
-     * unterbrochen werden
+     * wird gestartet durch Thread.start(), (ursprüngliche Idee: kann von außen mit Thread.interrupt()
+     * unterbrochen werden)
+     * Statt interrupt bietet der Thread jetzt die End-Methode nach außen an - evtl. fehleranfällig je nach Component
      */
     public void run() {
         // Start Objekt und Methode
-        Method startMethod = comp.getStart();
-        Object startObject = instantiateObjectForMethod(startMethod);
-        Class<?> startReturnType = startMethod.getReturnType(); // if needed
-
-        // End Objekt und Methode
-        Method endMethod = comp.getEnd();
-        Object endObject = instantiateObjectForMethod(endMethod);
-        Class<?> endReturnType = endMethod.getReturnType(); // if needed
+        Object startObject = instantiateObjectForMethod(this.startMethod);
+        Class<?> startReturnType = this.startMethod.getReturnType(); // if needed
 
         try {
             // hier: Generierung eines Objektes der Klasse mit Start-Methode
-            Object startReturnedObject = startMethod.invoke(startObject); // aber wie hier unterbrechen, falls die Start-Methode endlos ist?!
-            // TODO ??? rufe eine Methode endlos auf, wenn obige nur init UND ENDLICH ist
+            Object startReturnedObject = this.startMethod.invoke(startObject); // aber wie hier unterbrechen, falls die Start-Methode endlos ist?!
+            // ursprüngliche Idee: Beenden per thread.interrupt() - funktioniert aber bei endlosen start-Methoden nicht
             // startReturnType.cast(startReturnedObject).doSomethingAnnotated()
-            if (Thread.interrupted())
-                throw new InterruptedException();
-        } catch (InterruptedException | IllegalAccessException | InvocationTargetException e) {
-            // hier: ... der Klasse mit End-Methode
-            try {
-                Object endReturnedObject = endMethod.invoke(endObject);
-            } catch (IllegalAccessException | InvocationTargetException illegalAccessException) {
-                illegalAccessException.printStackTrace();
-            }
+        } catch (IllegalAccessException | InvocationTargetException e) {
+           e.printStackTrace();
         }
     }
 
