@@ -1,4 +1,4 @@
-package org.hbrs.ooka.ws2020.uebung2.deprecated;
+/*package org.hbrs.ooka.ws2020.uebung2.deprecated;
 
 import org.hbrs.ooka.ws2020.uebung2.component.Component;
 
@@ -37,3 +37,4 @@ public class ComponentContainer {
         con.add(a);
     }
 }
+*/

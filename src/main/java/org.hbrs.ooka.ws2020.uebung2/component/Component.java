@@ -12,12 +12,15 @@ public class Component {
     private ClassLoader classLoader;
     //private List<String> name;
     //private List<Class> c;
-    private HashMap<String, Class> map;
+    private HashMap<String, Class> map= new HashMap<>();
     private Method start;
     private Method end;
 
     public Class getClass(String name){
         return map.get(name);
+    }
+    public Class[] getKlass(){
+        return map.values().toArray(new Class[map.values().size()]);
     }
     public void setClass(String name, Class c){
         map.put(name, c);
