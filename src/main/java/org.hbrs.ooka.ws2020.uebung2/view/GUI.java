@@ -18,9 +18,10 @@ public class GUI extends JPanel implements ActionListener {
         textField = new JTextField(20);
         textField.addActionListener(this);
 
-        textArea = new JTextArea(5, 20);
+        textArea = new JTextArea(25, 80);
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
+        textArea.append("New RuntimeEnviroment started: \nPlease type command (init, delete, start, stop, state) followed by the Component Name");
 
         //Add Components to this panel.
         GridBagConstraints c = new GridBagConstraints();
@@ -38,6 +39,7 @@ public class GUI extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
         String text = textField.getText();
         String[] s = text.split(" ");
+        textArea.append(text + newline);
         try {
             if (s[0].equals("init")) {
                 textArea.append(re.initComponent(s[1])+newline);
@@ -57,7 +59,6 @@ public class GUI extends JPanel implements ActionListener {
         }catch(Exception e){
             textArea.append("Error at: " +text+newline);
         }
-        textArea.append(text + newline);
         textField.selectAll();
 
         //Make sure the new text is visible, even if there
