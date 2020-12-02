@@ -62,7 +62,7 @@ public class RuntimeEnv {
     public String getState(String name){
         for (ComponentThread com : list){
             if(com.getName().equals(name)){
-                return "State of Component: "+name+" is: "+com.getState().toString();
+                return "State of Component: "+name+" is: "+com.getComponentState();
 
             }
         }
