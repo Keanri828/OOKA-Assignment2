@@ -1,7 +1,6 @@
 package org.hbrs.ooka.ws2020.uebung2.assembler;
 
 import org.hbrs.ooka.ws2020.uebung2.component.Component;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.lang.reflect.Method;
 
@@ -9,10 +8,10 @@ public class ComponentThread extends Thread{
     private volatile boolean stop = false;
     private Component comp;
 
-    public ComponentThread(String name, Component c, ClassLoader cl) {
+    public ComponentThread(String name, Component c) {
         this.setName(name);
         this.comp = c;
-        this.setContextClassLoader(cl);
+        this.setContextClassLoader(c.getClassLoader());
     }
 
     /**
@@ -20,7 +19,7 @@ public class ComponentThread extends Thread{
      */
     public void getInterfaces() {
         // TODO: ggf. später, für Komponenteninteraktion
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     /**
