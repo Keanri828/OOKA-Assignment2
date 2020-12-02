@@ -1,12 +1,17 @@
 package org.hbrs.ooka.ws2020.uebung2.assembler;
 
 import org.hbrs.ooka.ws2020.uebung2.runtime.RuntimeEnv;
+import org.hbrs.ooka.ws2020.uebung2.view.CLI;
 
 public class AssemblerTest {
     public static void main(String[] args) throws Exception {
-        RuntimeEnv re = new RuntimeEnv();
+        /*RuntimeEnv re = new RuntimeEnv();
                 re.initComponent("Counter");
-                re.startComp("Counter");
+                re.startComp("Counter");*/
+
+        CLI cli = new CLI();
+        cli.startCli();
+
         /*Component com = con.search("Client");
         Class cla = com.getC();
         Method method = null;

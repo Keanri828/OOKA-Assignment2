@@ -1,6 +1,7 @@
 package org.hbrs.ooka.ws2020.uebung2.assembler;
 
 import org.hbrs.ooka.ws2020.uebung2.component.Component;
+import org.hbrs.ooka.ws2020.uebung2.runtime.RuntimeEnv;
 import org.hbrs.ooka.ws2020.uebung2.view.CLI;
 
 import java.io.IOException;

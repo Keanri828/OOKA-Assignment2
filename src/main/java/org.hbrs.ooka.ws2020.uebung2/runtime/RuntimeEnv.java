@@ -11,13 +11,13 @@ public class RuntimeEnv {
 
     private List<ComponentThread> list = new ArrayList<>();
 
-    public void initComponent(String name) throws Exception{
+    public String initComponent(String name) throws Exception{
         ComponentAssembler comAss = new ComponentAssembler();
         Component com = comAss.loadClasses("Counter");
         ComponentThread thread = new ComponentThread(name, com);
 
         list.add(thread);
-
+        return "Init: "+name;
 
 
         /*String[] param = new String[0];
@@ -25,39 +25,47 @@ public class RuntimeEnv {
         com.getStart().invoke(null, (Object) param);*/
     }
 
-    public void deleteComponent(String name){
+    public String deleteComponent(String name){
         for (ComponentThread com : list){
             if(com.getName().equals(name)){
                 list.remove(com);
+                return "Deleted: "+name;
             }
         }
+        return "Nothing Deleted: "+name;
     }
 
-    public void startComp(String name){
+    public String startComp(String name){
         for (ComponentThread com : list){
             if(com.getName().equals(name)){
                 com.start();
+                return "Started: "+name;
             }
         }
+        return "Nothing Started: "+name;
     }
 
-    public void stopComp(String name){
+    public String stopComp(String name){
         for (ComponentThread com : list){
             if(com.getName().equals(name)){
                 try {
                     com.stopComponentThread();
+                    return "Stopped: "+name;
                 }catch(Exception e){
 
                 }
             }
         }
+        return "Not Working did not Stop: "+name;
     }
 
-    public void getState(String name){
+    public String getState(String name){
         for (ComponentThread com : list){
             if(com.getName().equals(name)){
-                com.stop();
+                return "State of Component: "+name+" is: "+com.getState().toString();
+
             }
         }
+        return "No State found to Component: "+name;
     }
 }
