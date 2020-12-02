@@ -1,6 +1,7 @@
 package org.hbrs.ooka.ws2020.uebung2.assembler;
 
 import org.hbrs.ooka.ws2020.uebung2.component.Component;
+import org.hbrs.ooka.ws2020.uebung2.util.state.ComponentState;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -19,6 +20,10 @@ public class ComponentThread extends Thread{
         this.endMethod = c.getEnd();
     }
 
+    public ComponentState getComponentState() {
+        return this.comp.getState();
+    }
+
     /**
      * Methode zur Bereitstellung von Interfaces für Komponenteninteraktion
      */
@@ -33,6 +38,7 @@ public class ComponentThread extends Thread{
         Class<?> endReturnType = this.endMethod.getReturnType(); // if needed
 
         this.endMethod.invoke(endObject);
+        this.comp.nextState();
     }
 
     /**
@@ -47,6 +53,7 @@ public class ComponentThread extends Thread{
 
         try {
             // hier: Generierung eines Objektes der Klasse mit Start-Methode
+            this.comp.nextState();
             Object startReturnedObject = this.startMethod.invoke(startObject); // aber wie hier unterbrechen, falls die Start-Methode endlos ist?!
             // ursprüngliche Idee: Beenden per thread.interrupt() - funktioniert aber bei endlosen start-Methoden nicht
             // startReturnType.cast(startReturnedObject).doSomethingAnnotated()
