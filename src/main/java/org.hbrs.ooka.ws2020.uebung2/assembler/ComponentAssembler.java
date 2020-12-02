@@ -12,10 +12,10 @@ import java.util.jar.JarFile;
 
 public class ComponentAssembler {
     public Component loadClasses(String compName) throws ClassNotFoundException, IOException {
-        JarFile jarFile = new JarFile("Counter.jar");
+        JarFile jarFile = new JarFile(compName+".jar");
         Enumeration<JarEntry> e = jarFile.entries();
 
-        URL[] urls = {new URL("jar:file:" + "Counter.jar" + "!/")};
+        URL[] urls = {new URL("jar:file:" + compName+".jar" + "!/")};
         URLClassLoader cl = URLClassLoader.newInstance(urls);
         Component com = new Component();
         com.setClassLoader(cl);
