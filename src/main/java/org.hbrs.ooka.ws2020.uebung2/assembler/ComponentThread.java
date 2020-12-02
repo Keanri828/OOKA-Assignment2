@@ -31,22 +31,24 @@ public class ComponentThread extends Thread{
         // Start Objekt und Methode
         Method startMethod = comp.getStart();
         Object startObject = instantiateObjectForMethod(startMethod);
-        //Class<?> startReturnType = startMethod.getReturnType(); // if needed
+        Class<?> startReturnType = startMethod.getReturnType(); // if needed
 
         // End Objekt und Methode
         Method endMethod = comp.getEnd();
         Object endObject = instantiateObjectForMethod(endMethod);
-        //Class<?> endReturnType = endMethod.getReturnType(); // if needed
+        Class<?> endReturnType = endMethod.getReturnType(); // if needed
 
         try {
             // hier: Generierung eines Objektes der Klasse mit Start-Methode
-            startMethod.invoke(startObject); // aber wie hier unterbrechen?!
+            Object startReturnedObject = startMethod.invoke(startObject); // aber wie hier unterbrechen, falls die Start-Methode endlos ist?!
+            // TODO ??? rufe eine Methode endlos auf, wenn obige nur init UND ENDLICH ist
+            // startReturnType.cast(startReturnedObject).doSomethingAnnotated()
             if (Thread.interrupted())
                 throw new InterruptedException();
         } catch (InterruptedException | IllegalAccessException | InvocationTargetException e) {
             // hier: ... der Klasse mit End-Methode
             try {
-                endMethod.invoke(endObject);
+                Object endReturnedObject = endMethod.invoke(endObject);
             } catch (IllegalAccessException | InvocationTargetException illegalAccessException) {
                 illegalAccessException.printStackTrace();
             }
