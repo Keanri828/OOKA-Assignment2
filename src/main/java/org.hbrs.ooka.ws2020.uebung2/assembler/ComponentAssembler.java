@@ -53,6 +53,7 @@ public class ComponentAssembler {
         //System.out.print(startMethod.getName());
         com.setStart(startMethod);
         com.setStop(stopMethod);
+        com.setName(compName);
         return com;
     }
 
