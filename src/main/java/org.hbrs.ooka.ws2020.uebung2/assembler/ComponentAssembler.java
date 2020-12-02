@@ -52,8 +52,7 @@ public class ComponentAssembler {
         }
         //System.out.print(startMethod.getName());
         com.setStart(startMethod);
-        com.setStart(stopMethod);
-        com.setCLI(new CLI(compName));
+        com.setStop(stopMethod);
         return com;
     }
 }
