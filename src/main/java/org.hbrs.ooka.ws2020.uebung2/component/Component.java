@@ -11,6 +11,7 @@ public class Component {
     private ClassLoader classLoader;
     private Class c;
     private Method start;
+    private Method end;
 
     public Class getC() {
         return c;
@@ -47,6 +48,8 @@ public class Component {
     public Method getStart() {
         return start;
     }
+
+    public Method getEnd() { return end; }
 
     public void setStart(Method start) {
         this.start = start;
