@@ -9,35 +9,55 @@ import java.util.List;
 
 public class RuntimeEnv {
 
-    private List<Component> comps = new ArrayList<>();
+    private List<ComponentThread> list = new ArrayList<>();
 
     public void initComponent(String name) throws Exception{
         ComponentAssembler comAss = new ComponentAssembler();
         Component com = comAss.loadClasses("Counter");
         ComponentThread thread = new ComponentThread(name, com);
 
-        String[] param = new String[0];
+        list.add(thread);
+
+
+
+        /*String[] param = new String[0];
         System.out.println(com.getStart().getName());
-        com.getStart().invoke(null, (Object) param);
+        com.getStart().invoke(null, (Object) param);*/
     }
 
     public void deleteComponent(String name){
-        for (Component com : comps){
+        for (ComponentThread com : list){
             if(com.getName().equals(name)){
-                comps.remove(com);
+                list.remove(com);
             }
         }
     }
 
     public void startComp(String name){
-
+        for (ComponentThread com : list){
+            if(com.getName().equals(name)){
+                com.start();
+            }
+        }
     }
 
     public void stopComp(String name){
+        for (ComponentThread com : list){
+            if(com.getName().equals(name)){
+                try {
+                    com.stopComponentThread();
+                }catch(Exception e){
 
+                }
+            }
+        }
     }
 
     public void getState(String name){
-
+        for (ComponentThread com : list){
+            if(com.getName().equals(name)){
+                com.stop();
+            }
+        }
     }
 }
