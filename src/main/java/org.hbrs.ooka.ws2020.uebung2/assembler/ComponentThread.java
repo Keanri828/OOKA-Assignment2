@@ -32,6 +32,11 @@ public class ComponentThread extends Thread{
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Method to stop the underlying Component
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
     public void stopComponentThread() throws InvocationTargetException, IllegalAccessException {
         // End Objekt und Methode
         Object endObject = instantiateObjectForMethod(this.endMethod);
@@ -53,8 +58,9 @@ public class ComponentThread extends Thread{
 
         try {
             // hier: Generierung eines Objektes der Klasse mit Start-Methode
+            String[] param = new String[0];
             this.comp.nextState();
-            Object startReturnedObject = this.startMethod.invoke(startObject); // aber wie hier unterbrechen, falls die Start-Methode endlos ist?!
+            Object startReturnedObject = this.startMethod.invoke(startObject, (Object) param);
             // ursprüngliche Idee: Beenden per thread.interrupt() - funktioniert aber bei endlosen start-Methoden nicht
             // startReturnType.cast(startReturnedObject).doSomethingAnnotated()
         } catch (IllegalAccessException | InvocationTargetException e) {
