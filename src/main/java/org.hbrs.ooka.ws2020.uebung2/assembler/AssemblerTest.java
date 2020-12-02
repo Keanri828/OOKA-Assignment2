@@ -2,6 +2,7 @@ package org.hbrs.ooka.ws2020.uebung2.assembler;
 
 import org.hbrs.ooka.ws2020.uebung2.component.Component;
 import org.hbrs.ooka.ws2020.uebung2.util.ComponentContainer;
+import org.hbrs.ooka.ws2020.uebung2.util.Start;
 
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -18,10 +19,10 @@ public class AssemblerTest {
         ComponentContainer con = ComponentContainer.getInstance();
 
 
-        JarFile jarFile = new JarFile("C://Users/Robin/Desktop/Counter.jar");
+        JarFile jarFile = new JarFile("Counter.jar");
         Enumeration<JarEntry> e = jarFile.entries();
 
-        URL[] urls = {new URL("jar:file:" + "C://Users/Robin/Desktop/Counter.jar" + "!/")};
+        URL[] urls = {new URL("jar:file:" + "Counter.jar" + "!/")};
         URLClassLoader cl = URLClassLoader.newInstance(urls);
 
         while (e.hasMoreElements()) {
@@ -41,7 +42,24 @@ public class AssemblerTest {
             con.add(com);
         }
 
+
         Component com = con.search("Client");
+        Class cla = com.getC();
+        Method method = null;
+        Method[] meth = cla.getMethods();
+        for (Method me : meth) {
+            if (me.isAnnotationPresent(Start.class))
+                method = me;
+            System.out.println(me.getName());
+        }
+        //method = cla.getMethod("main", String[].class);
+        System.out.println("Method was created successfully");
+
+        String[] params = new String[0];
+
+        method.invoke(null, (Object) params);
+        System.out.println("Method run successfully");
+        /*Component com = con.search("Client");
         Class cla = com.getC();
         Method method = null;
         Method[] meth = cla.getMethods();
@@ -54,7 +72,7 @@ public class AssemblerTest {
         String[] params = new String[0];
 
         method.invoke(null, (Object) params);
-        System.out.println("Method run successfully");
+        System.out.println("Method run successfully");*/
 
     }
 }
