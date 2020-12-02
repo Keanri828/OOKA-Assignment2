@@ -4,29 +4,23 @@ import org.hbrs.ooka.ws2020.uebung2.util.ComponentState;
 import org.hbrs.ooka.ws2020.uebung2.util.Stopped;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.List;
 
 public class Component {
-    private String name;
     private ComponentState state = new Stopped();
     private ClassLoader classLoader;
-    private Class c;
+    //private List<String> name;
+    //private List<Class> c;
+    private HashMap<String, Class> map;
     private Method start;
     private Method end;
 
-    public Class getC() {
-        return c;
+    public Class getClass(String name){
+        return map.get(name);
     }
-
-    public void setC(Class c) {
-        this.c = c;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setClass(String name, Class c){
+        map.put(name, c);
     }
 
     public ComponentState getState() {

@@ -1,7 +1,7 @@
 package org.hbrs.ooka.ws2020.uebung2.assembler;
 
 import org.hbrs.ooka.ws2020.uebung2.component.Component;
-import org.hbrs.ooka.ws2020.uebung2.util.ComponentContainer;
+import org.hbrs.ooka.ws2020.uebung2.deprecated.ComponentContainer;
 import org.hbrs.ooka.ws2020.uebung2.util.Start;
 
 import java.lang.reflect.Method;
@@ -10,13 +10,12 @@ import java.net.URLClassLoader;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.lang.ClassLoader.*;
 
 public class AssemblerTest {
     public static void main(String[] args) throws Exception {
         //System.out.println("Test n Stuff");
 
-        ComponentContainer con = ComponentContainer.getInstance();
+        //ComponentContainer con = ComponentContainer.getInstance();
 
 
         JarFile jarFile = new JarFile("Counter.jar");
