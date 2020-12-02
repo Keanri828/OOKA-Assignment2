@@ -15,7 +15,8 @@ public class Started implements ComponentState{
     }
 
     @Override
-    public void printStatus() {
-        System.out.println("Component Started");
+    public String printStatus() {
+        return("Component Started");
     }
+
 }

@@ -14,7 +14,7 @@ public class Stopped implements ComponentState{
     }
 
     @Override
-    public void printStatus() {
-        System.out.println("Component Stopped");
+    public String printStatus() {
+        return("Component Stopped");
     }
 }

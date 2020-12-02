@@ -50,6 +50,7 @@ public class RuntimeEnv {
             if(com.getName().equals(name)){
                 try {
                     com.stopComponentThread();
+                    com.interrupt();
                     return "Stopped: "+name;
                 }catch(Exception e){
 
@@ -62,7 +63,7 @@ public class RuntimeEnv {
     public String getState(String name){
         for (ComponentThread com : list){
             if(com.getName().equals(name)){
-                return "State of Component: "+name+" is: "+com.getComponentState();
+                return "State of Component: "+name+" is: "+com.getComponentState().printStatus();
 
             }
         }
