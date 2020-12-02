@@ -61,8 +61,13 @@ public class ComponentThread extends Thread{
             String[] param = new String[0];
             this.comp.nextState();
             Object startReturnedObject = this.startMethod.invoke(startObject, (Object) param);
+            if (Thread.interrupted()) {
+                throw new InterruptedException();
+            }
             // ursprüngliche Idee: Beenden per thread.interrupt() - funktioniert aber bei endlosen start-Methoden nicht
             // startReturnType.cast(startReturnedObject).doSomethingAnnotated()
+        } catch (InterruptedException e) {
+            return;
         } catch (IllegalAccessException | InvocationTargetException e) {
            e.printStackTrace();
         }
