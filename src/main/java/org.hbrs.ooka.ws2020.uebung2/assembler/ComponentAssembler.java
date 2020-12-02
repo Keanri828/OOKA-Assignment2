@@ -55,4 +55,5 @@ public class ComponentAssembler {
         com.setStop(stopMethod);
         return com;
     }
+
 }

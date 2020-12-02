@@ -16,6 +16,7 @@ public class Component {
     private HashMap<String, Class> map= new HashMap<>();
     private Method start;
     private Method end;
+    private String name;
 
 
 
@@ -27,6 +28,13 @@ public class Component {
     }
     public void setClass(String name, Class c){
         map.put(name, c);
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+    public String getName(){
+        return name;
     }
 
     public ComponentState getState() {
