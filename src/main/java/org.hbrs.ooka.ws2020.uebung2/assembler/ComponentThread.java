@@ -40,8 +40,6 @@ public class ComponentThread extends Thread{
 
         try {
             // hier: Generierung eines Objektes der Klasse mit Start-Methode
-            if (Thread.interrupted())
-                throw new InterruptedException();
             startMethod.invoke(startObject); // aber wie hier unterbrechen?!
             if (Thread.interrupted())
                 throw new InterruptedException();
