@@ -69,4 +69,16 @@ public class RuntimeEnv {
         }
         return "No State found to Component: "+name;
     }
+
+    public String getThreadListString() {
+        StringBuilder sBuilder = new StringBuilder();
+        for (ComponentThread currThread : list) {
+            String substring = "ID: " + String.valueOf(currThread.getId())
+                    + ", Name: " + currThread.getName()
+                    + ", State: " + currThread.getComponentState().printStatus()
+                    + "\n";
+            sBuilder.append(substring);
+        }
+        return sBuilder.toString();
+    }
 }
