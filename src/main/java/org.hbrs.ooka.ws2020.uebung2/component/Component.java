@@ -1,11 +1,12 @@
 package org.hbrs.ooka.ws2020.uebung2.component;
 
-import org.hbrs.ooka.ws2020.uebung2.util.ComponentState;
-import org.hbrs.ooka.ws2020.uebung2.util.Stopped;
+import org.hbrs.ooka.ws2020.uebung2.util.state.ComponentState;
+import org.hbrs.ooka.ws2020.uebung2.util.state.Stopped;
+import org.hbrs.ooka.ws2020.uebung2.view.CLI;
+
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.List;
 
 public class Component {
     private ComponentState state = new Stopped();
@@ -15,6 +16,16 @@ public class Component {
     private HashMap<String, Class> map= new HashMap<>();
     private Method start;
     private Method end;
+    private CLI cli;
+
+
+    public CLI getCLI() {
+        return cli;
+    }
+
+    public void setCLI(CLI cli) {
+        this.cli = cli;
+    }
 
     public Class getClass(String name){
         return map.get(name);

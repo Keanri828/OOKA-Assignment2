@@ -1,7 +1,7 @@
 package org.hbrs.ooka.ws2020.uebung2.assembler;
 
 import org.hbrs.ooka.ws2020.uebung2.component.Component;
-import org.hbrs.ooka.ws2020.uebung2.util.Start;
+import org.hbrs.ooka.ws2020.uebung2.view.CLI;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -53,6 +53,7 @@ public class ComponentAssembler {
         //System.out.print(startMethod.getName());
         com.setStart(startMethod);
         com.setStart(stopMethod);
+        com.setCLI(new CLI(compName));
         return com;
     }
 }
