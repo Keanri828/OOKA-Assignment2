@@ -14,6 +14,7 @@ import java.lang.ClassLoader.*;
 public class AssemblerTest {
     public static void main(String[] args) throws Exception {
         //System.out.println("Test n Stuff");
+
         ComponentContainer con = ComponentContainer.getInstance();
 
 
