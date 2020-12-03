@@ -13,11 +13,11 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class ComponentAssembler {
-    public Component loadClasses(String compName) throws ClassNotFoundException, IOException {
-        JarFile jarFile = new JarFile(compName + ".jar");
+    public Component loadClasses(String compName, String path) throws ClassNotFoundException, IOException {
+        JarFile jarFile = new JarFile(path);
         Enumeration<JarEntry> e = jarFile.entries();
 
-        URL[] urls = {new URL("jar:file:" + compName + ".jar" + "!/")};
+        URL[] urls = {new URL("jar:file:" + path + "!/")};
         URLClassLoader cl = URLClassLoader.newInstance(urls);
         Component com = new Component();
         com.setClassLoader(cl);

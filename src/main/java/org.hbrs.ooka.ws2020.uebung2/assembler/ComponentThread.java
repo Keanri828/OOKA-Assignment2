@@ -24,6 +24,10 @@ public class ComponentThread extends Thread{
         return this.comp.getState();
     }
 
+    public Component getComp(){
+        return this.comp;
+    }
+
     /**
      * Methode zur Bereitstellung von Interfaces für Komponenteninteraktion
      */

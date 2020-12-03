@@ -11,9 +11,9 @@ public class RuntimeEnv {
 
     private List<ComponentThread> list = new ArrayList<>();
 
-    public String initComponent(String name) throws Exception{
+    public String initComponent(String name, String path) throws Exception{
         ComponentAssembler comAss = new ComponentAssembler();
-        Component com = comAss.loadClasses("Counter");
+        Component com = comAss.loadClasses(name, path);
         ComponentThread thread = new ComponentThread(name, com);
 
         list.add(thread);
@@ -38,7 +38,14 @@ public class RuntimeEnv {
     public String startComp(String name){
         for (ComponentThread com : list){
             if(com.getName().equals(name)){
-                com.start();
+                try {
+                    com.start();
+                }catch (IllegalThreadStateException e){
+                    list.remove(com);
+                    ComponentThread newCom = new ComponentThread(com.getName(), com.getComp());
+                    list.add(newCom);
+                    newCom.start();
+                }
                 return "Started: "+name;
             }
         }
