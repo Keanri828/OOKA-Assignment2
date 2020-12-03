@@ -21,7 +21,7 @@ public class GUI extends JPanel implements ActionListener {
         textArea = new JTextArea(25, 80);
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
-        textArea.append("New RuntimeEnviroment started: \nPlease type command (init, delete, start, stop, state) followed by the Component Name\n");
+        textArea.append("New RuntimeEnviroment started: \nPlease type command (init, delete, start, stop, state, allstate) followed by the Component Name\n");
 
         //Add Components to this panel.
         GridBagConstraints c = new GridBagConstraints();
