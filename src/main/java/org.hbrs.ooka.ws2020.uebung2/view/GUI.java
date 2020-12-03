@@ -3,7 +3,6 @@ package org.hbrs.ooka.ws2020.uebung2.view;
 import org.hbrs.ooka.ws2020.uebung2.runtime.RuntimeEnv;
 
 import java.awt.*;
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 

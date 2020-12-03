@@ -1,3 +1,5 @@
 # OOKA-Assignment2
 
-# default-string
+# TODO
+    - Command Pattern
+    - Name von Path trennen
