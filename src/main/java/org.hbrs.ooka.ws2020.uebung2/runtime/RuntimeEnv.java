@@ -11,7 +11,6 @@ import java.util.List;
 public class RuntimeEnv {
 
     private List<ComponentThread> list = new ArrayList<>();
-    private File backup = new File("backup.txt");
 
     public String initComponent(String name, String path) throws Exception{
         ComponentAssembler comAss = new ComponentAssembler();
