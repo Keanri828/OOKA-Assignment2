@@ -73,7 +73,7 @@ public class ComponentThread extends Thread {
             for (Field field : this.comp.getInject()) {
                 if (field.getType().isAssignableFrom(LoggerInterface.class)) {
                     field.setAccessible(true);
-                    field.set(null, myLog);
+                    field.set(startObject, myLog);
                 }
             }
             //Ende der Injection
