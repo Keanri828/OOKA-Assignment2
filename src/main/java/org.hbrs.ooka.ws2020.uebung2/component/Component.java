@@ -5,8 +5,10 @@ import org.hbrs.ooka.ws2020.uebung2.util.state.Stopped;
 import org.hbrs.ooka.ws2020.uebung2.view.CLI;
 
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
 
 public class Component {
     private ComponentState state = new Stopped();
@@ -17,9 +19,15 @@ public class Component {
     private Method start;
     private Method end;
     private String name;
+    private List<Field> inject;
 
 
-
+    public List<Field> getInject(){
+        return inject;
+    }
+    public void setInject(List<Field> inject){
+        this.inject = inject;
+    }
     public Class getClass(String name){
         return map.get(name);
     }

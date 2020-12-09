@@ -1,12 +1,15 @@
 package org.hbrs.ooka.ws2020.uebung2.assembler;
 
 import org.hbrs.ooka.ws2020.uebung2.component.Component;
+import org.hbrs.ooka.ws2020.uebung2.logger.LoggerFactory;
+import org.hbrs.ooka.ws2020.uebung2.logger.LoggerInterface;
 import org.hbrs.ooka.ws2020.uebung2.util.state.ComponentState;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class ComponentThread extends Thread{
+public class ComponentThread extends Thread {
     private volatile boolean stop = false;
     private Component comp;
     private Method startMethod;
@@ -24,7 +27,7 @@ public class ComponentThread extends Thread{
         return this.comp.getState();
     }
 
-    public Component getComp(){
+    public Component getComp() {
         return this.comp;
     }
 
@@ -38,6 +41,7 @@ public class ComponentThread extends Thread{
 
     /**
      * Method to stop the underlying Component
+     *
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
@@ -64,6 +68,15 @@ public class ComponentThread extends Thread{
             // hier: Generierung eines Objektes der Klasse mit Start-Methode
             String[] param = new String[0];
             this.comp.nextState();
+            // hier: setzen der Inject abhängigkeiten mit dem startObject
+            LoggerInterface myLog = new LoggerFactory().createLogger();
+            for (Field field : this.comp.getInject()) {
+                if (field.getType().isAssignableFrom(LoggerInterface.class)) {
+                    field.setAccessible(true);
+                    field.set(null, myLog);
+                }
+            }
+            //Ende der Injection
             Object startReturnedObject = this.startMethod.invoke(startObject, (Object) param);
             if (Thread.interrupted()) {
                 throw new InterruptedException();
@@ -73,12 +86,13 @@ public class ComponentThread extends Thread{
         } catch (InterruptedException e) {
             return;
         } catch (IllegalAccessException | InvocationTargetException e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
     /**
      * Generate instantiation of an object for given
+     *
      * @param m Method
      * @return mObject
      */
