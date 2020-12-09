@@ -27,12 +27,15 @@ public class BackupManager {
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             String line = null;
             while ((line = reader.readLine()) != null) {
+                System.out.println("read line: " + line);
                 list.add(line);
             }
         } catch (IOException e) {
             System.err.println(e);
         }
-        this.isCurrentConfig = true;
+        if (!list.isEmpty()) {
+            this.isCurrentConfig = true;
+        }
         return list;
     }
 

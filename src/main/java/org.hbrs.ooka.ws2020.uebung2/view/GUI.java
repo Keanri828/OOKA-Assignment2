@@ -5,6 +5,8 @@ import org.hbrs.ooka.ws2020.uebung2.runtime.RuntimeEnv;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import javax.swing.*;
 
 public class GUI extends JPanel implements ActionListener {
@@ -25,7 +27,8 @@ public class GUI extends JPanel implements ActionListener {
         textArea.append("New RuntimeEnviroment started: \nPlease type command (init, delete, start, stop, state, allstate)\n" +
                 "init: needs to be followed by component name and path to jar file\n" +
                 "delete, start, stop just needs the name of the component\n" +
-                "allstate needs no additional infos\n");
+                "allstate needs no additional infos\n" +
+                "an existing config in backup.txt can be loaded by loadconfig\n");
 
         //Add Components to this panel.
         GridBagConstraints c = new GridBagConstraints();
@@ -42,37 +45,50 @@ public class GUI extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent evt) {
         String text = textField.getText();
-        this.bm.writeConfig(text);
-        String[] s = text.split(" ");
-        textArea.append(text + newline);
-        try {
-            if (s[0].equals("init")) {
-                textArea.append(re.initComponent(s[1], s[2])+newline);
+        ArrayList<String> instructions = new ArrayList<>();
+        if (!text.equals("loadconfig")) {
+            this.bm.writeConfig(text);
+            instructions.add(text);
+        } else {
+            instructions = bm.readConfig();
+            if (instructions.isEmpty()) {
+                textArea.append("Config is empty.");
             }
-            else if(s[0].equals("delete")){
-                textArea.append(re.deleteComponent(s[1])+newline);
-            }
-            else if(s[0].equals("start")){
-                textArea.append(re.startComp(s[1])+newline);
-            }
-            else if(s[0].equals("stop")){
-                textArea.append(re.stopComp(s[1])+newline);
-            }
-            else if(s[0].equals("state")){
-                textArea.append(re.getState(s[1])+newline);
-            }
-            else if(s[0].equals("allstate")){
-                textArea.append(re.getThreadListString());
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-            textArea.append("Error at: " +text+newline);
         }
-        textField.selectAll();
 
-        //Make sure the new text is visible, even if there
-        //was a selection in the text area.
-        textArea.setCaretPosition(textArea.getDocument().getLength());
+        for (String instruction : instructions) {
+            String[] s = instruction.split(" ");
+            textArea.append(instruction + newline);
+            try {
+                if (s[0].equals("init")) {
+                    textArea.append(re.initComponent(s[1], s[2]) + newline);
+                } else if (s[0].equals("delete")) {
+                    textArea.append(re.deleteComponent(s[1]) + newline);
+                } else if (s[0].equals("start")) {
+                    textArea.append(re.startComp(s[1]) + newline);
+                } else if (s[0].equals("stop")) {
+                    textArea.append(re.stopComp(s[1]) + newline);
+                } else if (s[0].equals("state")) {
+                    textArea.append(re.getState(s[1]) + newline);
+                } else if (s[0].equals("allstate")) {
+                    textArea.append(re.getThreadListString());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                textArea.append("Error at: " + text + newline);
+            }
+            textField.selectAll();
+
+            //Make sure the new text is visible, even if there
+            //was a selection in the text area.
+            textArea.setCaretPosition(textArea.getDocument().getLength());
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     /**
