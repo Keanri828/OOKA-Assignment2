@@ -69,13 +69,7 @@ public class ComponentThread extends Thread {
             String[] param = new String[0];
             this.comp.nextState();
             // hier: setzen der Inject abhängigkeiten mit dem startObject
-            LoggerInterface myLog = new LoggerFactory().createLogger();
-            for (Field field : this.comp.getInject()) {
-                if (field.getType().isAssignableFrom(LoggerInterface.class)) {
-                    field.setAccessible(true);
-                    field.set(startObject, myLog);
-                }
-            }
+
             //Ende der Injection
             Object startReturnedObject = this.startMethod.invoke(startObject, (Object) param);
             if (Thread.interrupted()) {

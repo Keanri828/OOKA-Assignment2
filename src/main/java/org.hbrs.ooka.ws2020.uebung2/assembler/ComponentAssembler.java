@@ -65,6 +65,20 @@ public class ComponentAssembler {
             }
         }
         com.setInject(inject);
+
+        LoggerInterface myLog = new LoggerFactory().createLogger();
+        for (Field field : com.getInject()) {
+            if (field.getType().isAssignableFrom(LoggerInterface.class)) {
+                field.setAccessible(true);
+                try {
+                    field.set(null, myLog);
+                } catch (IllegalAccessException illegalAccessException) {
+                    illegalAccessException.printStackTrace();
+                }
+                System.out.println("Inject Worked");
+            }
+        }
+
         //System.out.print(startMethod.getName());
         com.setStart(startMethod);
         com.setStop(stopMethod);
