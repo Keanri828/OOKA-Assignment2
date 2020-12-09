@@ -4,12 +4,14 @@ import org.hbrs.ooka.ws2020.uebung2.assembler.ComponentAssembler;
 import org.hbrs.ooka.ws2020.uebung2.assembler.ComponentThread;
 import org.hbrs.ooka.ws2020.uebung2.component.Component;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RuntimeEnv {
 
     private List<ComponentThread> list = new ArrayList<>();
+    private File backup = new File("backup.txt");
 
     public String initComponent(String name, String path) throws Exception{
         ComponentAssembler comAss = new ComponentAssembler();
