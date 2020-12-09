@@ -41,16 +41,14 @@ public class BackupManager {
         try {
             System.out.println("Write instruction " + instruction + ". isCurrentConfig: " + this.isCurrentConfig);
             byte[] data = instruction.getBytes();
+            BufferedWriter writer = Files.newBufferedWriter(backupPath);
             if (this.isCurrentConfig) {
                 // do not rewrite the file
-                OutputStream out = new BufferedOutputStream(
-                        Files.newOutputStream(this.backupPath, APPEND));
-                out.write(data);
+                writer.newLine();
+                writer.write(instruction, 0, instruction.length());
             } else {
                 // rewrite file
-                OutputStream out = new BufferedOutputStream(
-                        Files.newOutputStream(this.backupPath, CREATE, TRUNCATE_EXISTING));
-                out.write(data, 0, data.length);
+                writer.write(instruction, 0, instruction.length());
                 this.isCurrentConfig = true;
             }
         } catch (IOException e) {
