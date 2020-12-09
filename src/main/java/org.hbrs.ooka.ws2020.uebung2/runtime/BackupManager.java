@@ -1,12 +1,10 @@
 package org.hbrs.ooka.ws2020.uebung2.runtime;
 
 import java.io.*;
-import java.nio.Buffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import static java.nio.file.StandardOpenOption.*;
 
 public class BackupManager {
     private static BackupManager bmInstance;
@@ -40,8 +38,6 @@ public class BackupManager {
 
     public void writeConfig(String instruction) {
         try {
-            System.out.println("Write instruction " + instruction + ". isCurrentConfig: " + this.isCurrentConfig);
-            byte[] data = instruction.getBytes();
             if (this.isCurrentConfig) {
                 // do not rewrite the file
                 BufferedWriter writer = new BufferedWriter(new FileWriter(String.valueOf(this.backupPath), true));
