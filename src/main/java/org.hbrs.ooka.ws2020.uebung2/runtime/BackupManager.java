@@ -8,11 +8,17 @@ import java.util.ArrayList;
 import static java.nio.file.StandardOpenOption.*;
 
 public class BackupManager {
-    private Path backupPath;
+    private static BackupManager bmInstance;
+    private final Path backupPath = Paths.get("backup.txt");
     private boolean isCurrentConfig = false;
 
-    public BackupManager(String path) {
-        this.backupPath = Paths.get(path);
+    private BackupManager() {    }
+
+    public static BackupManager getInstance() {
+        if (BackupManager.bmInstance == null) {
+            BackupManager.bmInstance = new BackupManager();
+        }
+        return BackupManager.bmInstance;
     }
 
     public ArrayList<String> readConfig() {
@@ -33,7 +39,8 @@ public class BackupManager {
 
     public void writeConfig(String instruction) {
         try {
-            byte data[] = instruction.getBytes();
+            System.out.println("Write instruction " + instruction + ". isCurrentConfig: " + this.isCurrentConfig);
+            byte[] data = instruction.getBytes();
             if (this.isCurrentConfig) {
                 // do not rewrite the file
                 OutputStream out = new BufferedOutputStream(
@@ -43,7 +50,7 @@ public class BackupManager {
                 // rewrite file
                 OutputStream out = new BufferedOutputStream(
                         Files.newOutputStream(this.backupPath, CREATE, TRUNCATE_EXISTING));
-                out.write(data);
+                out.write(data, 0, data.length);
                 this.isCurrentConfig = true;
             }
         } catch (IOException e) {

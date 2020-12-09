@@ -1,5 +1,6 @@
 package org.hbrs.ooka.ws2020.uebung2.view;
 
+import org.hbrs.ooka.ws2020.uebung2.runtime.BackupManager;
 import org.hbrs.ooka.ws2020.uebung2.runtime.RuntimeEnv;
 
 import java.awt.*;
@@ -11,6 +12,7 @@ public class GUI extends JPanel implements ActionListener {
     protected JTextArea textArea;
     private final static String newline = "\n";
     private RuntimeEnv re = new RuntimeEnv();
+    private BackupManager bm = BackupManager.getInstance();
     public GUI() {
         super(new GridBagLayout());
 
@@ -40,6 +42,7 @@ public class GUI extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent evt) {
         String text = textField.getText();
+        this.bm.writeConfig(text);
         String[] s = text.split(" ");
         textArea.append(text + newline);
         try {
